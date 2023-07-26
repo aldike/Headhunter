@@ -17,7 +17,7 @@ const Resume = sequelize.define('Resume', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  brithday: {
+  birthday: {
     type: DataTypes.DATE,
     allowNull: false,
   },
