@@ -1,4 +1,9 @@
 const Resume = require('./models/Resume')
+const WorkingHistory = require('./models/WorkingHistory')
+const Education = require('./models/Education')
+const ForeignLanguage = require('./models/ForeignLanguage')
+const ResumeEmploymentType = require('./models/ResumeEmploymentType')
+
 
 const createResume = async (req, res) =>{
     const resume = await Resume.create({
@@ -18,6 +23,50 @@ const createResume = async (req, res) =>{
         userId: req.user.id,
     })
     
+    if(req.body.workingHistories && req.body.workingHistories.length > 0){
+        req.body.workingHistories.forEach(async history => {
+            await WorkingHistory.create({
+                resumeId: resume.id,
+                company_name: history.company_name,
+                company_description: history.company_description,
+                responsibilities: history.responsibilities,
+                start_date: history.start_date,
+                end_date: history.end_date
+            })
+        });
+    }
+
+    if(req.body.education && req.body.education.length > 0){
+        req.body.education.forEach(async edu => {
+            await Education.create({
+                resumeId: resume.id,
+                level: edu.level,
+                university_name: edu.university_name,
+                faculty: edu.faculty,
+                major: edu.major,
+                end_date: edu.end_date
+            })
+        });
+    }
+
+    if(req.body.foreignLanguages && req.body.foreignLanguages.length > 0){
+        req.body.foreignLanguages.forEach(async fln => {
+            await ForeignLanguage.create({
+                resumeId: resume.id,
+                level: fln.level,
+                name: fln.name
+            })
+        });
+    }
+
+    if(req.body.employmentTypes && req.body.employmentTypes.length > 0){
+        req.body.employmentTypes.forEach(async employmentTypeId => {
+            await ResumeEmploymentType.create({
+                resumeId: resume.id,
+                employmentTypeId: employmentTypeId
+            })
+        });
+    }
     res.status(200).send(resume);
 }
 

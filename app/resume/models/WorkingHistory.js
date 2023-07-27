@@ -20,7 +20,7 @@ const WorkingHistory = sequelize.define('WorkingHistory', {
     allowNull: false,
   },
   end_date: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
     allowNull: false,
   },
 },{

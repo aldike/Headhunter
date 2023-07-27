@@ -20,7 +20,7 @@ const Education = sequelize.define('Education', {
     allowNull: false,
   },
   end_date: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
     allowNull: false,
   },
 },{
