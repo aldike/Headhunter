@@ -52,8 +52,8 @@ const Resume = sequelize.define('Resume', {
 
 });
 
-Resume.belongsTo(City, {foreignKey: 'cityId'});
+Resume.belongsTo(City, {foreignKey: 'cityId', as: "city"});
 Resume.belongsTo(User, {foreignKey: 'userId'});
-Resume.belongsTo(Country, {foreignKey: 'citizenship'});
+Resume.belongsTo(Country, {foreignKey: 'citizenship', as: "citizenshipObj"});
 
 module.exports = Resume;

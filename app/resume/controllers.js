@@ -3,7 +3,9 @@ const WorkingHistory = require('./models/WorkingHistory')
 const Education = require('./models/Education')
 const ForeignLanguage = require('./models/ForeignLanguage')
 const ResumeEmploymentType = require('./models/ResumeEmploymentType')
-
+const EmploymentType = require('../employment-type/EmploymentType')
+const City = require('../region/City')
+const Country = require('../region/Country')
 
 const createResume = async (req, res) =>{
     const resume = await Resume.create({
@@ -70,6 +72,45 @@ const createResume = async (req, res) =>{
     res.status(200).send(resume);
 }
 
+const getMyResumes = async (req, res) =>{
+    const resumes = await Resume.findAll({where: {userId: req.user.id}})
+    res.status(200).send(resumes)
+}
+const getResume = async (req, res) =>{
+    const resume = await Resume.findByPk(req.params.id, {
+        include: [
+            {
+                model: WorkingHistory,
+                as: 'workingHistories'
+            },
+            {
+                model: Education,
+                as: 'education'
+            },
+            {
+                model: EmploymentType,
+                as: 'employmentTypes'
+            },
+            {
+                model: ForeignLanguage,
+                as: 'foreignLanguages'
+            },
+            {
+                model: City,
+                as: 'city'
+            },
+            {
+                model: Country,
+                as: 'citizenshipObj'
+            }
+        ]
+    })
+    res.status(200).send(resume)
+}
+
+
 module.exports = {
-    createResume
+    createResume,
+    getMyResumes,
+    getResume
 }

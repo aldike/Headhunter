@@ -15,7 +15,9 @@ const ResumeEmploymentType = sequelize.define('ResumeEmploymentType', {
   timestamps: false,
 });
 
-Resume.belongsToMany(EmploymentType, { through: 'ResumeEmploymentType', foreignKey: 'resumeId', otherKey: 'employmentTypeId' });
-EmploymentType.belongsToMany(Resume, { through: 'ResumeEmploymentType', foreignKey: 'employmentTypeId', otherKey: 'resumeId' });
+Resume.belongsToMany(EmploymentType, { through: 'ResumeEmploymentType',
+foreignKey: 'resumeId', otherKey: 'employmentTypeId', as: "employmentTypes" });
+EmploymentType.belongsToMany(Resume, { through: 'ResumeEmploymentType',
+foreignKey: 'employmentTypeId', otherKey: 'resumeId' });
 
 module.exports = ResumeEmploymentType;
