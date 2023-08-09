@@ -1,5 +1,5 @@
 const Apply = require('./Apply');
-const {UNCATEGORIZED} = require('./utils');
+const {UNCATEGORIZED, INVITED} = require('./utils');
 const sendMail = require('../utils/sendMail')
 const Vacancy = require('../vacancy/models/Vacancy')
 const Resume = require('../resume/models/Resume')
@@ -37,6 +37,10 @@ const getEmployeeApplies = async (req, res) =>{
     const applies = await Apply.findAll({
         where: {
             resumeId: {[Op.in]: ids}
+        },
+        include: {
+            model: Vacancy,
+            as: "vacancy"
         }
     })
     res.status(200).send(applies)
@@ -49,8 +53,24 @@ const deleteApply = async (req, res) =>{
     })
     res.status(200).end()
 }
+const acceptEmployee = async (req, res) =>{
+    console.log(req.body);
+    await Apply.update(
+        {
+            status: INVITED
+        },
+        {
+        where: {
+            id: req.body.applyId
+            }
+        }
+    )
+
+    res.status(200).end()
+}
 module.exports = {
     createApply,
     getEmployeeApplies,
-    deleteApply
+    deleteApply,
+    acceptEmployee
 }
