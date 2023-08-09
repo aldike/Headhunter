@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Resume = require('./models/Resume')
 const WorkingHistory = require('./models/WorkingHistory')
 const Education = require('./models/Education')

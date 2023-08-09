@@ -2,12 +2,16 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('ResumeEmploymentTypes', {
+    await queryInterface.createTable('Applies', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       resumeId: {
         type: Sequelize.INTEGER,
@@ -19,20 +23,28 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      employmentTypeId: {
+      vacancyId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'EmploymentTypes',
+          model: 'Vacancies',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ResumeEmploymentTypes');
+    await queryInterface.dropTable('Applies');
   }
 };
