@@ -1,3 +1,5 @@
+const Vacancy = require('./models/Vacancy')
+
 const validateVacancy = (req, res, next) =>{
     let errors = {};
 
@@ -16,7 +18,18 @@ const validateVacancy = (req, res, next) =>{
         res.status(400).send(errors)
     else next()
 }
+const isVacancyAuthor = async (req, res, next) =>{
+    const vacancy = await Vacancy.findByPk(req.params.id || req.body.id);
+        if(!vacancy){
+            res.status(400).send({message: "Vacancy with that id is not exist"})
+        }else if(vacancy.userId == req.user.id){
+            next()
+        }else{
+            res.status(403).send({message: "Access forbidden"})
+        }
+}
 
 module.exports = {
-    validateVacancy
+    validateVacancy,
+    isVacancyAuthor
 }
