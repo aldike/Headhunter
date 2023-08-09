@@ -1,8 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
 const passport = require("passport");
-// const multer = require('multer');
-// const upload = multer();
 const app = express();
 
 app.use(logger('dev'));
@@ -12,8 +10,6 @@ app.use(express.static(__dirname + "/public"))
 app.use(passport.initialize());
 
 require('./app/auth/passport')
-
-// app.use(upload.any());
 
 app.use(require('./app/auth/routes'))
 app.use(require('./app/region/routes'))
