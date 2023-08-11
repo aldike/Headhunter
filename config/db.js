@@ -2,7 +2,6 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs')
 const dbConfig = require('./config')
 
-process.env.NODE_ENV = "production";
 let sequelize;
 if(process.env.NODE_ENV === "production"){
   console.log('Running Production');
